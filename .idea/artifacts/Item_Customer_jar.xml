@@ -1,0 +1,10 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="Item_Customer:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/Item_Customer_jar</output-path>
+    <root id="archive" name="Item_Customer.jar">
+      <element id="module-output" name="Item_Customer" />
+      <element id="extracted-dir" path="$USER_HOME$/Downloads/hadoop-common-2.7.3.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Downloads/hadoop-mapreduce-client-core-2.7.3.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>
