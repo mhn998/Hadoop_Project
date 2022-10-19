@@ -54,6 +54,7 @@ Part 2. Implement Pairs algorithm to compute relative frequencies.
 
 [4 points] Create Java classes (.java files)
 [1 points] Show input, output and batch file to execute your program at command line in Hadoop.
+
 Part 3. Implement Stripes algorithm to compute relative frequencies.
 
 [4 points] Create Java classes (.java files)
