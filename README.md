@@ -55,11 +55,26 @@ Part 2. Implement Pairs algorithm to compute relative frequencies.
 [4 points] Create Java classes (.java files)
 [1 points] Show input, output and batch file to execute your program at command line in Hadoop.
 
+- Java Classes: [Pairs-java-files](src/Item_Customer_Pairs)
+- Pairs Input: [input](assets/Input-TEAM-5.txt)
+- Pairs Output: [output](assets/Hadoop_Item_Customer_pairs_output/part-r-00000)
+- Pairs Batch-file: [batch](assets/Hadoop_Item_Customer_pairs_output/batch-pairs.sh)
+- Pairs Jar-file: [jar](out/artifacts/Item_Customer_Pairs_jar/Item_Customer_Pairs.jar)
+
 Part 3. Implement Stripes algorithm to compute relative frequencies.
 
 [4 points] Create Java classes (.java files)
 [1 points] Show input, output and batch file to execute your program at command line in Hadoop.
 Part 4. Empirical Comparison
 
+- Java Classes: [Stripe java files](src/Item_Customer_Stripe)
+- Stripe Input: [input](assets/Input-TEAM-5.txt)
+- Stripe Output: [output](assets/Hadoop_Item_Customer_stripe_output/part-r-00000)
+- Stripe Batch-file: [batch](assets/Hadoop_Item_Customer_stripe_output/batch-stripe.sh) 
+- Stripe Jar-file: [jar](out/artifacts/Item_Customer_Stripe_jar/Item_Customer_Stripe.jar)
+
 [2 Points]Run the test data specific to your group and collect data on memory usage and time for both pair and stripe approach. Write your observations citing data.
+
+- Pairs job info file:  [pairs-job-info](assets/Hadoop_Item_Customer_pairs_output/Pairs-info.txt)
+- Stripe job Info file: [stripe-job-output](assets/Hadoop_Item_Customer_stripe_output/Stripe-info.txt)
 
