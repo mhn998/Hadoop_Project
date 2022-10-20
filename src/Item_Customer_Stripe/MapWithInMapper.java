@@ -12,25 +12,48 @@ import org.apache.hadoop.mapreduce.Mapper;
 
 public class MapWithInMapper extends Mapper<LongWritable, Text, Text, MapWritable> {
 
-    @Override
-    protected void map(LongWritable key, Text value,
-                       Mapper<LongWritable, Text, Text, MapWritable>.Context context) throws IOException, InterruptedException {
-        String line = value.toString().trim();
-        String[] input = line.split(" ");
+	HashMap<String, MapWritable> hashmap;
 
-        for (int i = 0; i < input.length; i++) {
-            MapWritable mapWritable = new MapWritable();
-            for (int j = i + 1; j < input.length && !input[i].equals(input[j]); j++) {
-                if (mapWritable.get(new Text(input[j])) == null) {
-                    mapWritable.put(new Text(input[j]), new IntWritable(1));
-                } else {
-                    IntWritable inWritable = (IntWritable) mapWritable
-                            .get(new Text(input[j]));
-                    mapWritable.put(new Text(input[j]), new IntWritable(
-                            inWritable.get() + 1));
-                }
-            }
-            context.write(new Text(input[i]), mapWritable);
-        }
-    }
+	@Override
+	protected void setup(
+			Mapper<LongWritable, Text, Text, MapWritable>.Context context) {
+		hashmap = new HashMap<>();
+	}
+
+	@Override
+	protected void map(LongWritable key, Text value,
+			Mapper<LongWritable, Text, Text, MapWritable>.Context context) {
+		String line = value.toString().trim();
+		String[] input = line.split(" ");
+
+		for (int i = 0; i < input.length; i++) {
+			for (int j = i + 1; j < input.length && !input[i].equals(input[j]); j++) {
+				
+				MapWritable mapWritable = hashmap.get(input[i]);
+				if (mapWritable == null) {
+					mapWritable = new MapWritable();
+					hashmap.put(input[i], mapWritable);
+				}
+
+				if (mapWritable.get(new Text(input[j])) == null) {
+					mapWritable.put(new Text(input[j]), new IntWritable(1));
+				} else {
+					IntWritable inWritable = (IntWritable) mapWritable
+							.get(new Text(input[j]));
+					mapWritable.put(new Text(input[j]), new IntWritable(
+							inWritable.get() + 1));
+				}
+			}
+		}
+	}
+
+	@Override
+	protected void cleanup(
+			Mapper<LongWritable, Text, Text, MapWritable>.Context context)
+			throws IOException, InterruptedException {
+		super.cleanup(context);
+		for (Entry<String, MapWritable> entry : hashmap.entrySet()) {
+			context.write(new Text(entry.getKey()), entry.getValue());
+		}
+	}
 }
