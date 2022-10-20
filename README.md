@@ -75,6 +75,6 @@ Part 4. Empirical Comparison
 
 [2 Points]Run the test data specific to your group and collect data on memory usage and time for both pair and stripe approach. Write your observations citing data.
 
-- Pairs job info file:  [pairs-job-info](assets/Hadoop_Item_Customer_pairs_output/Pairs-info.txt)
-- Stripe job Info file: [stripe-job-output](assets/Hadoop_Item_Customer_stripe_output/Stripe-info.txt)
+- Pairs job info file:  [pairs-job-info](assets/Hadoop_Item_Customer_pairs_output/Pairs-info-WithInMapper.txt)
+- Stripe job Info file: [stripe-job-output](assets/Hadoop_Item_Customer_stripe_output/Stripe-info-WithInMapper.txt)
 

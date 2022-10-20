@@ -28,7 +28,7 @@ public class Main extends Configured implements Tool {
 
 		FileInputFormat.addInputPath(job, new Path(args[0]));
 		FileOutputFormat.setOutputPath(job, new Path(args[1]));
-		job.setMapperClass(Map.class);
+		job.setMapperClass(MapWithInMapper.class); // or Job.setMapperClass(Map.class)
 		job.setReducerClass(Reduce.class);
 		job.setOutputKeyClass(Text.class);
 		job.setOutputValueClass(StripeValue.class);
