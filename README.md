@@ -78,3 +78,8 @@ Part 4. Empirical Comparison
 - Pairs job info file:  [pairs-job-info](assets/Hadoop_Item_Customer_pairs_output/Pairs-info-WithInMapper.txt)
 - Stripe job Info file: [stripe-job-output](assets/Hadoop_Item_Customer_stripe_output/Stripe-info-WithInMapper.txt)
 
+References: [cloudera hadoop wordCount example](https://docs.cloudera.com/documentation/other/tutorial/CDH5/topics/ht_usage.html)
+
+Notes:
+- start Hue on localhost:8888(sudo service hue stop, sudo service hue start) and browse HDFS files
+- start cloudera manager on localhost:7180(/home/cloudera/cloudera-manager --express --force), will take about 10 mins
