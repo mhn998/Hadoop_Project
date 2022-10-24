@@ -30,15 +30,14 @@ public class AverageInMapper {
                 if(H.containsKey(ipAddressString))
                 {
                     RequestSizeAndQuantity temp = H.get(ipAddressString);
-                    H.put(ipAddressString,new RequestSizeAndQuantity(new IntWritable(Integer.parseInt(tokens[tokens.length-1])+temp.getRequestSize().get()),new IntWritable(temp.getCount().get()+1)));
+                    H.put(ipAddressString,new RequestSizeAndQuantity(new IntWritable((tokens[tokens.length-1].equals("-")?0:
+                            Integer.parseInt(tokens[tokens.length-1]))+temp.getRequestSize().get()),new IntWritable(temp.getCount().get()+1)));
                 }
                 else {
-                    H.put(ipAddressString, new RequestSizeAndQuantity(new IntWritable(tokens[tokens.length-1].equals("-")?0:Integer.parseInt(tokens[tokens.length-1])), new IntWritable(1)));
+                    H.put(ipAddressString, new RequestSizeAndQuantity(new IntWritable(tokens[tokens.length-1].equals("-")?0:
+                            Integer.parseInt(tokens[tokens.length-1])), new IntWritable(1)));
                 }
-//                context.write(new Text(ipAddressString),new IntWritable(Integer.parseInt(tokens[tokens.length-1])));//new Text(+","+1)//new RequestSizeAndQuantity(new IntWritable(getRequestSize(line)), new IntWritable(1))
             }
-
-
         }
 
         @Override
@@ -56,25 +55,19 @@ public class AverageInMapper {
         public void reduce(Text key, Iterable<RequestSizeAndQuantity> values, Context context)
                 throws IOException, InterruptedException {
 
-//			int sum = 0;
-//			int count = 0;
             for (RequestSizeAndQuantity val : values) {
-//				String[] split = val.split(",");
-//				sum+=val.get();
-//				count++;
                 if(H.containsKey(key.toString()))
                 {
                     RequestSizeAndQuantity temp = H.get(key.toString());
-                    H.put(key.toString(),new RequestSizeAndQuantity(new IntWritable(val.getRequestSize().get()+temp.getRequestSize().get()),new IntWritable(val.getCount().get()+temp.getCount().get())));
+                    H.put(key.toString(),new RequestSizeAndQuantity(new IntWritable(val.getRequestSize().get()
+                            +temp.getRequestSize().get()),new IntWritable(val.getCount().get()+temp.getCount().get())));
                 }
                 else {
-                    H.put(key.toString(), new RequestSizeAndQuantity(new IntWritable(val.getRequestSize().get()), new IntWritable(val.getCount().get())));
+                    H.put(key.toString(), new RequestSizeAndQuantity(new IntWritable(val.getRequestSize().get()),
+                            new IntWritable(val.getCount().get())));
                 }
             }
-
-
         }
-
         @Override
         protected void cleanup(Reducer<Text, RequestSizeAndQuantity, Text, DoubleWritable>.Context context) throws IOException, InterruptedException {
             super.cleanup(context);
@@ -84,7 +77,6 @@ public class AverageInMapper {
             }
         }
     }
-
     static String getIpAddress(String ipString){
         String IPADDRESS_PATTERN =
                 "(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)";
@@ -106,8 +98,8 @@ public class AverageInMapper {
     public static void main(String[] args) throws Exception {
         Configuration conf = new Configuration();
 
-        Job job = new Job(conf, "Average");
-        job.setJarByClass(Average.class);
+        Job job = new Job(conf, "AverageInMapper");
+        job.setJarByClass(AverageInMapper.class);
 
         //Reducer output
         job.setOutputKeyClass(Text.class);

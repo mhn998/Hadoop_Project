@@ -13,23 +13,22 @@ import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
 
 public class WordCountInMapper {
-
 	public static class Map extends Mapper<LongWritable, Text, Text, IntWritable> {
-		private Logger logger = Logger.getLogger(WordCountInMapper.class.getName());
-		private Text word = new Text();
-
+		private final Logger logger = Logger.getLogger(WordCountInMapper.class.getName());
+		HashMap<String, Integer> inMapper;
+		@Override
+		protected void setup(Mapper<LongWritable, Text, Text, IntWritable>.Context context) throws IOException, InterruptedException {
+			super.setup(context);
+			inMapper = new HashMap<>();
+		}
 
 		public void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
 			String line = value.toString();
 			StringTokenizer tokenizer = new StringTokenizer(line);
-			HashMap<String, Integer> inMapper = new HashMap<>();
+			Text word = new Text();
 
-			
-			logger.info("----- I  mapper Combiner Output ------ ");
-			
 			while (tokenizer.hasMoreTokens()) {
 				word.set(tokenizer.nextToken());
-
 				if (inMapper.containsKey(word.toString())) {
 					int sum =inMapper.get(word.toString()) + 1;
 					inMapper.put(word.toString(), sum);
@@ -37,6 +36,11 @@ public class WordCountInMapper {
 					inMapper.put(word.toString(), 1);
 				}
 			}
+		}
+
+		@Override
+		protected void cleanup(Mapper<LongWritable, Text, Text, IntWritable>.Context context) throws IOException, InterruptedException {
+			super.cleanup(context);
 
 			for (Entry<String, Integer> entry : inMapper.entrySet()) {
 				String word = entry.getKey();
@@ -44,7 +48,6 @@ public class WordCountInMapper {
 				logger.info(" --- Key : "+word+ "    val : "+count);
 				context.write(new Text(word), new IntWritable(count));
 			}
-
 		}
 	}
 
